@@ -1,22 +1,42 @@
+const todoService = require('../services/TodoService');
+
 exports.get = (req, res) => {
     const id = req.params.id;
     console.log('get')
     res.send(`OK get id = ${id}`);
 }
 
-exports.getAll = (req, res) => {
-    console.log('getAll')
-    res.send('OK getAll');
+exports.getAll = async (req, res) => {
+    try {
+        const allTodos = await TodoService.getAllTodos();
+
+        if (!allTodos) {
+            return res.status(404).json('There are no todos published yet.')
+        }
+
+        res.json(allTodos);
+    } catch (error) {
+        return res.status(500).json({ error: err });
+    }
+
 }
 
-exports.add = (req, res) => {
-    console.log('add')
-    res.send('OK add');
+exports.add = async (req, res) => {
+    try {
+        const createTodo = await TodoService.addTodo(req.body);
+        res.status(201).json(createTodo);
+    } catch (error) {
+        return res.status(500).json({ error: err });
+    }
 }
 
-exports.update = (req, res) => {
-    console.log('update')
-    res.send('OK update');
+exports.update = async (req, res) => {
+    try {
+        const updateTodo = await TodoService.updateTodo(req.body);
+        res.status(201).json(updateTodo);
+    } catch (error) {
+        return res.status(500).json({ error: err });
+    }
 }
 
 exports.delete = (req, res) => {
