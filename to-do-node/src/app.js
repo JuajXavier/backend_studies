@@ -8,8 +8,11 @@ app.use(
     })
 )
 
-app.get('/', (req, res) => {
-    res.send('Teste');
-})
+const indexRouter = require('./routers/index');
+const todoRouter = require('./routers/todo');
+
+// everytime the '/endpoint' is called, the router equivalent fires;
+app.use('/', indexRouter);
+app.use('/todos', todoRouter);
 
 module.exports = app;
