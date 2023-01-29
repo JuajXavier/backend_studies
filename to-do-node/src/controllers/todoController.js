@@ -1,4 +1,4 @@
-const todoService = require('../services/TodoService');
+const TodoService = require('../services/TodoService');
 
 exports.get = (req, res) => {
     const id = req.params.id;
@@ -15,7 +15,7 @@ exports.getAll = async (req, res) => {
         }
 
         res.json(allTodos);
-    } catch (error) {
+    } catch (err) {
         return res.status(500).json({ error: err });
     }
 
@@ -25,7 +25,7 @@ exports.add = async (req, res) => {
     try {
         const createTodo = await TodoService.addTodo(req.body);
         res.status(201).json(createTodo);
-    } catch (error) {
+    } catch (err) {
         return res.status(500).json({ error: err });
     }
 }
@@ -34,7 +34,7 @@ exports.update = async (req, res) => {
     try {
         const updateTodo = await TodoService.updateTodo(req.body);
         res.status(201).json(updateTodo);
-    } catch (error) {
+    } catch (err) {
         return res.status(500).json({ error: err });
     }
 }
